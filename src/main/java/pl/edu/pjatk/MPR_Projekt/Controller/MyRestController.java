@@ -20,13 +20,23 @@ public class MyRestController {
         return this.piesekService.getPiesekList();
     }
 
-    @GetMapping("piesek/id")
-    public List<Piesek> get(@PathVariable int id) {
+    @GetMapping("piesek/{id}")
+    public Piesek get(@PathVariable int id) {
         return this.piesekService.get(id);
     }
 
-    @PostMapping("piesek")
+    @PostMapping("/piesek")
     public void create(@RequestBody Piesek piesek) {
         this.piesekService.createPiesek(piesek);
     }
+    @DeleteMapping("/piesek/{id}")
+    public void delete(@PathVariable int id) {
+        piesekService.removePiesekById(id);
+    }
+
+@PutMapping("/piesek")
+    public void update(@RequestBody Piesek piesek) {
+        piesekService.updatePiesek(piesek);
+}
+
 }

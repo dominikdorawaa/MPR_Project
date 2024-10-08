@@ -3,13 +3,23 @@ package pl.edu.pjatk.MPR_Projekt.Model;
 public class Piesek {
     private String color;
     private String name;
+    private int id;
 
 
-    public Piesek(String color, String name) {
+
+    public Piesek(String color, String name,int id) {
         this.color = color;
         this.name = name;
+        this.id = id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getColor() {
         return color;
     }
