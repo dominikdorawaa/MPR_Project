@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Repository.PiesekRepository;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +19,9 @@ private PiesekRepository piesekRepository;
     public PiesekService(PiesekRepository repository) {
     this.piesekRepository = repository;
 
-        piesekList.add(new Piesek("brown", "Spike", 1));
-        piesekList.add(new Piesek("red", "Doggy", 2));
-        piesekList.add(new Piesek("orange", "Leo", 3));
+    piesekRepository.save(new Piesek("brown", "Spike", 1));
+    piesekRepository.save(new Piesek("red", "Doggy", 2));
+    piesekRepository.save(new Piesek("orange", "Leo", 3));
     }
 
     public List<Piesek> getPiesekByName (String name) {
@@ -31,39 +30,60 @@ private PiesekRepository piesekRepository;
 
 
     public List<Piesek> getPiesekList() {
-        return piesekList;
+        return (List<Piesek>) piesekRepository.findAll();
     }
 
     public void createPiesek(Piesek piesek) {
-        piesekList.add(piesek);
+    piesekRepository.save(piesek);
     }
 
-    public void removePiesekById(int id) {
-        piesekList.removeIf(piesek -> piesek.getId() == id);
+    public void deletePiesekById(int id) {
+piesekRepository.deleteById(id);
     }
 
-    public Piesek get(int id) {
-        return piesekList.stream()
-                .filter(piesek -> piesek.getId() == id)
-                .findFirst()
-                .orElse(null);
+//    Optional<Piesek> piesek = piesekRepository.findById(id);
+//    if (piesek.isPresent()) {
+//        piesekRepository.deleteById(id);
+//    } else {
+//        throw new IllegalArgumentException("Piesek o ID" + id + " nie istnieje");
+//    }
+
+    public void removePiesekByName(String name) {
+    List <Piesek> pieski = piesekRepository.findByName(name);
+    if (pieski.isEmpty()) {
+        throw new IllegalArgumentException("Piesek o nazwie" + name + " nie istnieje");
+    }
+        for (Piesek piesek : pieski) {
+            piesekRepository.delete(piesek);
+        }
     }
 
-public Optional<Piesek> getItemById(int id) {
+
+public Optional<Piesek> getById(int id) {
     return this.piesekRepository.findById(id);
 }
 
+//    public void updatePiesek(int id, piesek ) {
+//       Optional<Piesek> existingPiesek = piesekRepository.findById(piesek.getId());
+//       if(existingPiesek.isPresent()){
+//        piesekRepository.save(piesek);
+//        } else {
+//           throw new IllegalArgumentException("Piesek o ID juz istnieje");
+//       }
+//    }
 
-    public void updatePiesek(Piesek piesek) {
-        for (int i = 0; i < piesekList.size(); i++) {
-            if (piesekList.get(i).getId() == piesek.getId()) {
-                piesekList.get(i).setColor(piesek.getColor());
-                piesekList.get(i).setName(piesek.getName());
-                return;
-            }
 
-
-        }
+public void updatePiesek(int id, Piesek updatedPiesek) {
+    Optional<Piesek> existingPiesek = piesekRepository.findById(id);
+    if (existingPiesek.isPresent()) {
+        Piesek piesek = existingPiesek.get();
+        piesek.setName(updatedPiesek.getName());
+        piesek.setColor(updatedPiesek.getColor());
+        piesekRepository.save(piesek);
+    } else {
+        throw new RuntimeException("Piesek o ID " + id + " nie istnieje");
     }
+}
+
 }
 

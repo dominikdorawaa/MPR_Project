@@ -6,6 +6,8 @@ import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Service.PiesekService;
 
 import java.util.List;
+import java.util.Optional;
+
 @RestController
 public class MyRestController {
     private PiesekService piesekService;
@@ -17,12 +19,12 @@ public class MyRestController {
 
     @GetMapping("piesek/all")
     public List<Piesek> getAll() {
-        return this.piesekService.getPiesekList();
+        return piesekService.getPiesekList();
     }
 
     @GetMapping("piesek/{id}")
-    public Piesek get(@PathVariable int id) {
-        return this.piesekService.get(id);
+    public Optional<Piesek> getById(@PathVariable int id) {
+        return this.piesekService.getById(id);
     }
 
     @GetMapping("piesek/name/{name}")
@@ -30,18 +32,28 @@ public class MyRestController {
         return this.piesekService.getPiesekByName(name);
     }
 
-    @PostMapping("/piesek")
+    @GetMapping("piesek/{id}/identyfikator")
+    public long getIdentifier(@PathVariable int id) {
+        Optional<Piesek> piesek = this.piesekService.getById(id);
+        return piesek.map(Piesek::getIdentyfikator).orElseThrow(() -> new RuntimeException("Piesek nie odnaleziony ;("));
+    }
+
+    @PostMapping("/piesek/add")
     public void create(@RequestBody Piesek piesek) {
         this.piesekService.createPiesek(piesek);
     }
-    @DeleteMapping("/piesek/{id}")
+    @DeleteMapping("/piesek/id/{id}")
     public void delete(@PathVariable int id) {
-        piesekService.removePiesekById(id);
+        this.piesekService.deletePiesekById(id);
+    }
+    @DeleteMapping("/piesek/name/{name}")
+    public void delete(@PathVariable String name) {
+        this.piesekService.removePiesekByName(name);
     }
 
-@PutMapping("/piesek")
-    public void update(@RequestBody Piesek piesek) {
-        piesekService.updatePiesek(piesek);
+    @PutMapping("piesek/update/{id}")
+    public void update(@PathVariable int id, @RequestBody Piesek piesek) {
+        this.piesekService.updatePiesek(id, piesek);
 }
 
 }

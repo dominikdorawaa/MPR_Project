@@ -7,27 +7,33 @@ import jakarta.persistence.Id;
 
 
 @Entity
-
 public class Piesek {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String color;
     private String name;
-    private int id;
-private long identyfikator;
 
-    public Piesek(String color, String name,int id) {
+private int identyfikator;
+
+    public int getIdentyfikator() {
+        return identyfikator;
+    }
+
+    public Piesek(String color, String name, int id) {
         this.color = color;
         this.name = name;
         this.id = id;
+     this.identyfikator = obliczIdentyfikator();
     }
-
+public Piesek(){}
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+      this.identyfikator = obliczIdentyfikator();
     }
     public String getColor() {
         return color;
@@ -43,6 +49,26 @@ private long identyfikator;
 
     public void setName(String name) {
         this.name = name;
+       this.identyfikator = obliczIdentyfikator();
     }
+
+
+    private int obliczIdentyfikator() {
+        int sum = 0;
+
+
+        for (int i = 0; i < name.length(); i++) {
+            sum += (int) name.charAt(i);
+        }
+
+
+        for (int i = 0; i < color.length(); i++) {
+            sum += (int) color.charAt(i);
+        }
+
+        return sum;
+    }
+
+
 }
 
