@@ -25,6 +25,11 @@ public class MyRestController {
         return this.piesekService.get(id);
     }
 
+    @GetMapping("piesek/name/{name}")
+    public List<Piesek> getByName(@PathVariable String name) {
+        return this.piesekService.getPiesekByName(name);
+    }
+
     @PostMapping("/piesek")
     public void create(@RequestBody Piesek piesek) {
         this.piesekService.createPiesek(piesek);
