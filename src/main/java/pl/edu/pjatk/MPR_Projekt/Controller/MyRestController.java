@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Service.PiesekService;
+import pl.edu.pjatk.MPR_Projekt.Service.StringUtilsService;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @RestController
 public class MyRestController {
     private PiesekService piesekService;
+
 
     @Autowired
     public MyRestController(PiesekService piesekService) {
@@ -54,6 +56,9 @@ public class MyRestController {
     @PutMapping("piesek/update/{id}")
     public void update(@PathVariable int id, @RequestBody Piesek piesek) {
         this.piesekService.updatePiesek(id, piesek);
+
+
+
 }
 
 }

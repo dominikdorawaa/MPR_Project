@@ -2,6 +2,7 @@ package pl.edu.pjatk.MPR_Projekt.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Repository.PiesekRepository;
 
@@ -12,16 +13,18 @@ import java.util.Optional;
 @Component
 public class PiesekService {
 private PiesekRepository piesekRepository;
-
+private StringUtilsService stringUtilsService;
     List<Piesek> piesekList = new ArrayList<>();
 
 @Autowired
-    public PiesekService(PiesekRepository repository) {
+    public PiesekService(PiesekRepository repository, StringUtilsService stringUtilsService) {
+   this.stringUtilsService = stringUtilsService;
+
     this.piesekRepository = repository;
 
-    piesekRepository.save(new Piesek("brown", "Spike", 1));
-    piesekRepository.save(new Piesek("red", "Doggy", 2));
-    piesekRepository.save(new Piesek("orange", "Leo", 3));
+//    piesekRepository.save(new Piesek("brown", "Spike", 1));
+//    piesekRepository.save(new Piesek("red", "Doggy", 2));
+//    piesekRepository.save(new Piesek("orange", "Leo", 3));
     }
 
     public List<Piesek> getPiesekByName (String name) {
@@ -34,6 +37,8 @@ private PiesekRepository piesekRepository;
     }
 
     public void createPiesek(Piesek piesek) {
+    piesek.setName(this.stringUtilsService.lower(piesek.getName()));
+    piesek.setName(this.stringUtilsService.upper(piesek.getName()));
     piesekRepository.save(piesek);
     }
 
@@ -60,7 +65,13 @@ piesekRepository.deleteById(id);
 
 
 public Optional<Piesek> getById(int id) {
-    return this.piesekRepository.findById(id);
+
+ Optional<Piesek> piesek =  this.piesekRepository.findById(id);
+
+ if(piesek.isPresent()) {
+     piesek.get().setName(this.stringUtilsService.lower(piesek.get().getName()));
+ }
+return piesek;
 }
 
 //    public void updatePiesek(int id, piesek ) {
@@ -84,6 +95,10 @@ public void updatePiesek(int id, Piesek updatedPiesek) {
         throw new RuntimeException("Piesek o ID " + id + " nie istnieje");
     }
 }
+
+
+
+
 
 }
 
