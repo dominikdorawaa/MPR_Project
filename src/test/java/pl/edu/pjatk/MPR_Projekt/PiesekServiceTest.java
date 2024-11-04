@@ -4,17 +4,12 @@ import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-<<<<<<< HEAD
 import org.springframework.boot.test.context.SpringBootTest;
-=======
->>>>>>> origin/master
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Repository.PiesekRepository;
 import pl.edu.pjatk.MPR_Projekt.Service.PiesekService;
 import pl.edu.pjatk.MPR_Projekt.Service.StringUtilsService;
 
-
-<<<<<<< HEAD
 import java.util.List;
 import java.util.Optional;
 
@@ -24,13 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-=======
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
->>>>>>> origin/master
 public class PiesekServiceTest {
 
     private PiesekService piesekService;
@@ -47,11 +36,11 @@ public class PiesekServiceTest {
 
     @Test
     public void createSetsPiesekToUpperCase() {
-<<<<<<< HEAD
+
         Piesek piesek = new Piesek("brown","donii",213);
-=======
-       Piesek piesek = new Piesek("brown","donii",213);
->>>>>>> origin/master
+
+
+
 
 
         this.piesekService.createPiesek(piesek);
@@ -59,7 +48,7 @@ public class PiesekServiceTest {
         verify(piesekRepository, times(1)).save(any());
     }
 
-<<<<<<< HEAD
+
     @Test
     public void testGetPiesekByName(){
         when(piesekRepository.findByName("Max")).thenReturn(List.of(new Piesek("brown","Max" , 1)));
@@ -124,7 +113,6 @@ public class PiesekServiceTest {
         verify(piesekRepository, times(1)).save(existingPiesek);
         assertEquals("white", existingPiesek.getColor());
     }
-=======
->>>>>>> origin/master
+
 
 }
