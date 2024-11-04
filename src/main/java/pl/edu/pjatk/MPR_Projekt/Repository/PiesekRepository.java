@@ -12,5 +12,6 @@ import java.util.List;
 public interface PiesekRepository extends CrudRepository<Piesek, Integer> {
     public List<Piesek> findByName(String name);
 
+    public List<Piesek> findByIdentyfikator(int identifier);
 
 }

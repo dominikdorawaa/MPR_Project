@@ -53,7 +53,7 @@ public Piesek(){}
     }
 
 
-    private int obliczIdentyfikator() {
+    public int obliczIdentyfikator() {
         int sum = 0;
 
 

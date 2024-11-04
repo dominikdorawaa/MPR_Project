@@ -95,7 +95,7 @@ public class PiesekServiceTest {
         when(piesekRepository.findById(1)).thenReturn(Optional.of(piesek));
         when(stringUtilsService.lower(any())).thenReturn("max");
 
-        Optional<Piesek> foundPiesek = piesekService.getById(1);
+        Piesek foundPiesek = piesekService.getById(1);
 
         assertTrue(foundPiesek.isPresent());
         assertEquals("Max", foundPiesek.get().getName());
