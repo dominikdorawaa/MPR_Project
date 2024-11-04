@@ -15,6 +15,8 @@ public class StringUtilsService {
     }
 
     public String upper(String text) {
+
         return text.toUpperCase();
+
     }
 }
