@@ -1,6 +1,9 @@
 package pl.edu.pjatk.MPR_Projekt.Controller;
 
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +11,7 @@ import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Service.PiesekService;
 import pl.edu.pjatk.MPR_Projekt.Service.StringUtilsService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,11 +62,27 @@ public class MyRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("piesek2/{id}")
+    public ResponseEntity<ByteArrayResource> getPdf(@PathVariable int id) throws IOException {
+        Piesek piesek = piesekService.getById(id);
+
+
+        ByteArrayResource pdfResource = piesekService.generatePdf(piesek);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=piesek_" + id + ".pdf");
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/pdf");
+
+        return new ResponseEntity<>(pdfResource, headers, HttpStatus.OK);
+    }
+
+
+
     @PutMapping("piesek/update/{id}")
     public ResponseEntity<Piesek> update(@PathVariable int id, @RequestBody Piesek piesek) {
         this.piesekService.updatePiesek(id, piesek);
 return new ResponseEntity<>(HttpStatus.OK);
-
 }
+
 
 }

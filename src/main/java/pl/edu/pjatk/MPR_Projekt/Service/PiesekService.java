@@ -1,12 +1,24 @@
 package pl.edu.pjatk.MPR_Projekt.Service;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Repository.PiesekRepository;
 import pl.edu.pjatk.MPR_Projekt.exception.PiesekAlreadyExistException;
 import pl.edu.pjatk.MPR_Projekt.exception.PiesekNotFoundException;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -108,6 +120,41 @@ public class PiesekService {
             throw new PiesekNotFoundException();
         }
     }
+
+
+
+    public ByteArrayResource generatePdf(Piesek piesek) throws IOException {
+        PDDocument document = new PDDocument();
+        PDPage page = new PDPage();
+        document.addPage(page);
+
+        PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+        contentStream.setLeading(14.5f);
+
+        contentStream.beginText();
+
+        contentStream.newLineAtOffset(50, 750);
+
+
+
+        contentStream.showText("Name: " + piesek.getName());
+        contentStream.newLine();
+
+        contentStream.showText("Color: " + piesek.getColor());
+        contentStream.newLine();
+
+        contentStream.endText();
+        contentStream.close();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        document.save(byteArrayOutputStream);
+        document.close();
+
+        return new ByteArrayResource(byteArrayOutputStream.toByteArray());
+    }
+
 
 }
 
