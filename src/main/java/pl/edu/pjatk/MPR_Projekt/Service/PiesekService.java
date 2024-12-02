@@ -4,21 +4,14 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Repository.PiesekRepository;
 import pl.edu.pjatk.MPR_Projekt.exception.PiesekAlreadyExistException;
 import pl.edu.pjatk.MPR_Projekt.exception.PiesekNotFoundException;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,12 +49,13 @@ public class PiesekService {
     }
 
     public void createPiesek(Piesek piesek) {
+        piesek.setName(stringUtilsService.upper(piesek.getName()));
+
         piesek.obliczIdentyfikator();
         List<Piesek> pieski = this.piesekRepository.findByIdentyfikator(piesek.getIdentyfikator());
         if (!pieski.isEmpty()) {
             throw new PiesekAlreadyExistException();
         }
-        //sprawdz czy pola sa nie puste
         piesekRepository.save(piesek);
     }
 
@@ -73,12 +67,7 @@ public class PiesekService {
         piesekRepository.deleteById(id);
     }
 
-//    Optional<Piesek> piesek = piesekRepository.findById(id);
-//    if (piesek.isPresent()) {
-//        piesekRepository.deleteById(id);
-//    } else {
-//        throw new IllegalArgumentException("Piesek o ID" + id + " nie istnieje");
-//    }
+
 
     public void removePiesekByName(String name) {
         List<Piesek> pieski = piesekRepository.findByName(name);
@@ -99,14 +88,7 @@ public class PiesekService {
         return piesek.get();
     }
 
-//    public void updatePiesek(int id, piesek ) {
-//       Optional<Piesek> existingPiesek = piesekRepository.findById(piesek.getId());
-//       if(existingPiesek.isPresent()){
-//        piesekRepository.save(piesek);
-//        } else {
-//           throw new IllegalArgumentException("Piesek o ID juz istnieje");
-//       }
-//    }
+
 
 
     public void updatePiesek(int id, Piesek updatedPiesek) {
@@ -136,8 +118,6 @@ public class PiesekService {
         contentStream.beginText();
 
         contentStream.newLineAtOffset(50, 750);
-
-
 
         contentStream.showText("Name: " + piesek.getName());
         contentStream.newLine();

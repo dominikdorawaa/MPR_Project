@@ -1,22 +1,20 @@
 package pl.edu.pjatk.MPR_Projekt;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ByteArrayResource;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Repository.PiesekRepository;
 import pl.edu.pjatk.MPR_Projekt.Service.PiesekService;
 import pl.edu.pjatk.MPR_Projekt.Service.StringUtilsService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 
@@ -40,11 +38,8 @@ public class PiesekServiceTest {
         Piesek piesek = new Piesek("brown","donii",213);
 
 
-
-
-
         this.piesekService.createPiesek(piesek);
-        verify(stringUtilsService, times(2)).upper(any());
+        verify(stringUtilsService, times(1)).upper(any());
         verify(piesekRepository, times(1)).save(any());
     }
 
@@ -78,13 +73,15 @@ public class PiesekServiceTest {
 
         piesekService.createPiesek(piesek);
 
-        verify(stringUtilsService, times(1)).lower((any()));
-        verify(stringUtilsService, times(1)).upper(any());
-        verify(piesekRepository, times(1)).save(any());
+        verify(stringUtilsService, times(1)).lower("bobby");
+        verify(stringUtilsService, times(1)).upper("BOBBY");
+        verify(piesekRepository, times(1)).save(any(Piesek.class));
     }
 
     @Test
     public void testDeletePiesekById(){
+        Piesek piesek = new Piesek("brown", "Max", 1);
+        when(piesekRepository.findById(1)).thenReturn(Optional.of(piesek));
         piesekService.deletePiesekById(1);
         verify(piesekRepository, times(1)).deleteById(1);
     }
@@ -97,8 +94,8 @@ public class PiesekServiceTest {
 
         Piesek foundPiesek = piesekService.getById(1);
 
-        assertTrue(foundPiesek.isPresent());
-        assertEquals("Max", foundPiesek.get().getName());
+     assertNotNull(foundPiesek);
+        assertEquals("Max", foundPiesek.getName());
         verify(stringUtilsService, times(1)).lower(any());
     }
 
@@ -114,5 +111,12 @@ public class PiesekServiceTest {
         assertEquals("white", existingPiesek.getColor());
     }
 
+@Test
+    public void testGeneratePdf() throws IOException {
+    Piesek piesek = new Piesek("brown", "Max", 1 );
+    ByteArrayResource pdf = piesekService.generatePdf(piesek);
 
+    assertNotNull(pdf);
+    assertTrue(pdf.contentLength() > 0);
+}
 }
