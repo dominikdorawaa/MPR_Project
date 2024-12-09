@@ -27,7 +27,7 @@ public class PiesekService {
         this.piesekRepository = repository;
 
         piesekRepository.save(new Piesek("brown", "Spike", 1));
-        piesekRepository.save(new Piesek("red", "Doggy", 2));
+        piesekRepository.save(new Piesek("red", "Doggyyy", 2));
         piesekRepository.save(new Piesek("orange", "Leo", 3));
     }
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pieski!</title>
+</head>
+<body>
+<p>All my pieski:</p>
+
+<h2 th:text="${(piesek)}"></h2>
+
+
+<table>
+    <tr>
+        <td>Name</td>
+    <td>Color</td>
+    </tr>
+
+    <tr th:each="piesek : ${pieski}">
+        <td th:text="${piesek.name}"></td>
+        <td th:text="${piesek.color}"></td>
+    </tr>
+</table>
+</body>
+</html>
