@@ -8,8 +8,8 @@
 <p>Add piesek</p>
 
 <form action="#" th:action="@{/addForm}" th:object="${piesek}" method="post">
-<input type="text" placeholder="name" th:filed="${piesek.name}">
-<input type="text" placeholder="color" th:filed="${piesek.color}">
+<input type="text" placeholder="name" th:field="${piesek.name}">
+<input type="text" placeholder="color" th:field="${piesek.color}">
 
     <input type="submit" value="submit">
 </form>

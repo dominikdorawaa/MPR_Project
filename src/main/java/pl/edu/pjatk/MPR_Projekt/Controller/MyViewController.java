@@ -14,11 +14,11 @@ import java.util.List;
 @Controller
 public class MyViewController {
 
-private PiesekService piesekService;
+    private PiesekService piesekService;
 
-public MyViewController(PiesekService piesekService) {
-    this.piesekService = piesekService;
-}
+    public MyViewController(PiesekService piesekService) {
+        this.piesekService = piesekService;
+    }
 
 
     @GetMapping("/view/all")

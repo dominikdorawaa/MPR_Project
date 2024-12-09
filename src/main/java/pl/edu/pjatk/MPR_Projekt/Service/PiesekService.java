@@ -25,6 +25,7 @@ public class PiesekService {
     @Autowired
     public PiesekService(PiesekRepository repository, StringUtilsService stringUtilsService) {
         this.piesekRepository = repository;
+        this.stringUtilsService = stringUtilsService;
 
         piesekRepository.save(new Piesek("brown", "Spike", 1));
         piesekRepository.save(new Piesek("red", "Doggyyy", 2));
