@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+
+<h1>Edycja pieska</h1>
+<form th:action="@{/editForm/{id}(id=${piesek.id})}" th:object="${piesek}" method="post">
+    <input type="hidden" name="id" th:value="*{id}" />
+
+    <label for="name">Imię:</label>
+    <input type="text" id="name" name="name" th:field="*{name}"/><br/>
+
+    <label for="color">Kolor:</label>
+    <input type="text" id="color" name="color" th:field="*{color}"/><br/>
+
+    <input type="submit" value="Zapisz zmiany">
+</form>
+
+</body>
+</html>
