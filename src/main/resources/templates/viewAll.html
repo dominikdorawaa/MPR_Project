@@ -2,23 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pieski!</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <title>Moje pieski!</title>
 </head>
 <body>
-<p>All my pieski:</p>
+<p>Wszystkie pieski:</p>
 
 <h2 th:text="${(piesek)}"></h2>
 
 
 <table>
     <tr>
-        <td>Name</td>
-    <td>Color</td>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Color</th>
     </tr>
 
     <tr th:each="piesek : ${pieski}">
+        <td th:text="${piesek.id}"></td>
         <td th:text="${piesek.name}"></td>
         <td th:text="${piesek.color}"></td>
+        <td> <a th:href="@{/editForm/{id}(id=${piesek.id})}"> Edytuj</a>
+        <a th:href="@{/delete/{id}(id=${piesek.id})}">Usuń</a>
+        </td>
     </tr>
 </table>
 </body>

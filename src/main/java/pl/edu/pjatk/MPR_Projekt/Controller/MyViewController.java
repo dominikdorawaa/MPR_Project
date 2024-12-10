@@ -1,11 +1,11 @@
 package pl.edu.pjatk.MPR_Projekt.Controller;
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Service.PiesekService;
 
@@ -41,4 +41,27 @@ public class MyViewController {
         return "redirect:/view/all";
     }
 
+
+    @GetMapping("/editForm/{id}")
+    public String displayEditForm(@PathVariable int id, Model model) {
+        Piesek piesek = piesekService.getById(id);
+        model.addAttribute("piesek", piesek);
+        return "editForm";
+    }
+
+
+    @PostMapping("/editForm/{id}")
+    public String updateForm(@PathVariable int id, @ModelAttribute Piesek piesek) {
+        this.piesekService.updatePiesek(id, piesek);
+        return "redirect:/view/all";
+    }
+
+
+    @GetMapping("/deleteForm/{id}")
+    public String deleteForm(@PathVariable int id) {
+        this.piesekService.deletePiesekById(id);
+      return "redirect:/view/all";
+
+
+    }
 }
