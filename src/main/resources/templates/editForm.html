@@ -7,8 +7,8 @@
 <body>
 
 <h1>Edycja pieska</h1>
-<form th:action="@{/editForm/{id}(id=${piesek.id})}" th:object="${piesek}" method="post">
-    <input type="hidden" name="id" th:value="*{id}" />
+<form th:action="@{/editForm/{name}(name=${piesek.name})}" th:object="${piesek}" method="post">
+    <input type="hidden" name="name" th:value="*{name}" />
 
     <label for="name">Imię:</label>
     <input type="text" id="name" name="name" th:field="*{name}"/><br/>

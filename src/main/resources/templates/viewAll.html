@@ -2,30 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>Moje pieski!</title>
 </head>
 <body>
-<p>Wszystkie pieski:</p>
-
-<h2 th:text="${(piesek)}"></h2>
+<h1>Wszystkie pieski</h1>
 
 
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Color</th>
-    </tr>
+<div th:if="${pieski}">
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="piesek : ${pieski}">
+            <td th:text="${piesek.id}"></td>
+            <td th:text="${piesek.name}"></td>
+            <td th:text="${piesek.color}"></td>
+            <td>
+                <a th:href="@{/editForm/{id}(id=${piesek.id})}">Edytuj</a> |
+                <a th:href="@{/deleteForm/{id}(id=${piesek.id})}">Usuń</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-    <tr th:each="piesek : ${pieski}">
-        <td th:text="${piesek.id}"></td>
-        <td th:text="${piesek.name}"></td>
-        <td th:text="${piesek.color}"></td>
-        <td> <a th:href="@{/editForm/{id}(id=${piesek.id})}"> Edytuj</a>
-        <a th:href="@{/delete/{id}(id=${piesek.id})}">Usuń</a>
-        </td>
-    </tr>
-</table>
+
+<div th:if="${pieski == null or #lists.isEmpty(pieski)}">
+    <p>Brak piesków do wyświetlenia.</p>
+</div>
+
+
+<div th:if="${error}" th:text="${error}"></div>
+
 </body>
 </html>
