@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.Service.PiesekService;
-import pl.edu.pjatk.MPR_Projekt.exception.PiesekNotFoundException;
 
 import java.util.List;
 
@@ -32,20 +31,6 @@ public class MyViewController {
         return "viewAll";
     }
 
-
-    @GetMapping("/view/name/{name}")
-    public String displayByName(@PathVariable String name, Model model) {
-        List<Piesek> piesekList = this.piesekService.getPiesekByName(name);
-        if (piesekList == null || piesekList.isEmpty()) {
-            model.addAttribute("error", "Brak piesków do wyświetlenia o nazwie: " + name);
-        } else {
-            model.addAttribute("pieski", piesekList);
-        }
-        return "viewAll";
-    }
-
-
-//to do: poprawic addForm i editForm + testy
     @GetMapping("/addForm")
     public String displayAddForm(Model model) {
         model.addAttribute("piesek", new Piesek());
@@ -59,20 +44,49 @@ public class MyViewController {
     }
 
 
+    @GetMapping("/view/name/{name}")
+    public String displayByName(@PathVariable String name, Model model) {
+        List<Piesek> piesekList = this.piesekService.getPiesekByName(name);
+        if (piesekList == null || piesekList.isEmpty()) {
+            model.addAttribute("error", "Brak piesków do wyświetlenia o nazwie: " + name);
+        } else {
+            model.addAttribute("pieski", piesekList);
+        }
+        return "viewAll";
+    }
 
-    @GetMapping("/editForm/{name}")
-    public String displayEditForm(@PathVariable String name, Model model) {
-        Piesek piesek = (Piesek) this.piesekService.getPiesekByName(name);
+
+    @GetMapping("/view/{id}")
+    public String displayById(@PathVariable int id, Model model) {
+        Piesek piesek = this.piesekService.getPiesekById(id);
+        if (piesek == null) {
+            model.addAttribute("error", "Brak piesków do wyświetlenia o id: " + id);
+        } else {
+            model.addAttribute("pieski", piesek);
+        }
+        return "viewAll";
+    }
+
+
+    //to do: testy
+    @GetMapping("/editForm/{id}")
+    public String displayEditForm(@PathVariable int id, Model model) {
+        Piesek piesek = (Piesek) this.piesekService.getPiesekById(id);
         model.addAttribute("piesek", piesek);
         return "editForm";
     }
 
 
-    @PostMapping("/editForm/{name}")
-    public String updateForm(@PathVariable String name, @ModelAttribute Piesek piesek) {
-        this.piesekService.updatePiesek(name, piesek);
+    @PostMapping("/editForm/{id}")
+    public String updateForm(@PathVariable int id, @ModelAttribute Piesek piesek) {
+        this.piesekService.updatePiesek(piesek,id);
         return "redirect:/view/all";
     }
+
+
+
+
+
 
 
     @GetMapping("/deleteForm/{id}")

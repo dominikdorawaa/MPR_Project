@@ -1,25 +1,22 @@
 package pl.edu.pjatk.MPR_Projekt.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.exception.PiesekAlreadyExistException;
 import pl.edu.pjatk.MPR_Projekt.exception.PiesekNotFoundException;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Service
@@ -40,16 +37,24 @@ public class PiesekService {
                 .uri("piesek/all")
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {});
-            if (piesekList == null || piesekList.isEmpty()) {
-                System.out.println("baza jest pusta");
-            }
             return piesekList;
         } catch (Exception e) {
             throw new PiesekNotFoundException();
         }
     }
 
-
+    public void createPiesek(Piesek piesek) {
+        try {
+            restClient.post()
+                    .uri("/piesek/add")
+                    .contentType(APPLICATION_JSON)
+                    .body(piesek)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+            throw new PiesekAlreadyExistException();
+        }
+    }
 
     public List<Piesek> getPiesekByName(String name) {
         try {
@@ -68,36 +73,6 @@ public class PiesekService {
     }
 
 
-    //to do: poprawic metode create(dodawnie) i update(edytowanie)
-    public void createPiesek(Piesek piesek) {
-        try {
-            System.out.println("Wysyłanie JSON-a: " + new ObjectMapper().writeValueAsString(piesek));
-            restClient.post()
-                    .uri("/piesek/add")
-                    .contentType(APPLICATION_JSON)
-                    .body(piesek)
-                    .retrieve()
-                    .toBodilessEntity();
-        } catch (Exception e) {
-            System.out.println("Błąd przy dodawaniu pieska: " + e.getMessage());
-            e.printStackTrace();
-            throw new PiesekAlreadyExistException();
-        }
-    }
-
-
-    public void updatePiesek(String name, Piesek updatedPiesek) {
-        try {
-            restClient.put()
-                    .uri("/piesek/update/" + name)
-                    .body(updatedPiesek)
-                    .retrieve()
-                    .toBodilessEntity();
-        } catch (Exception e) {
-            throw new PiesekNotFoundException();
-        }
-    }
-
     public void deletePiesekById(int id) {
         try {
             restClient.delete()
@@ -108,6 +83,36 @@ public class PiesekService {
             throw new PiesekNotFoundException();
         }
     }
+
+
+
+    public Piesek getPiesekById(int id) {
+    try {
+            return restClient.get()
+                    .uri("piesek/{id}", id)
+                    .retrieve()
+                    .body(Piesek.class);
+        } catch (Exception e) {
+            throw new PiesekNotFoundException();
+        }
+  }
+
+
+
+
+    public void updatePiesek(Piesek updatedPiesek,int id) {
+        try {
+            restClient.put()
+                    .uri("/piesek/update/{id}", id)
+                    .body(updatedPiesek)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+           throw new PiesekNotFoundException();
+        }
+    }
+
+
 
     public ByteArrayResource generatePdf(Piesek piesek) throws IOException {
         PDDocument document = new PDDocument();
@@ -138,6 +143,7 @@ public class PiesekService {
 
         return new ByteArrayResource(byteArrayOutputStream.toByteArray());
     }
+
 
 
 }

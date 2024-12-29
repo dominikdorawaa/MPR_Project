@@ -5,16 +5,31 @@
     <title>Pieski form!</title>
 </head>
 <body>
-<p>Add piesek</p>
+<p>Dodaj pieska</p>
 
-<form action="#" th:action="@{/addForm}" th:object="${piesek}" method="post">
-<input id = "color" type="text" placeholder="name" th:field="${piesek.name}">
-<input id = "name" type="text" placeholder="color" th:field="${piesek.color}">
+<form th:action="@{/addForm}" th:object="${piesek}" method="post">
+
+    <label for="name">Imię:</label>
+    <input id="name" type="text" placeholder="Wpisz imię" th:field="*{name}" required>
+    <br/>
+
+
+    <label for="color">Kolor:</label>
+    <input id="color" type="text" placeholder="Wpisz kolor" th:field="*{color}" required>
+    <br/>
 
 
 
     <input id="submit" type="submit" value="Dodaj">
 </form>
+
+
+<div th:if="${pieski != null and !#lists.isEmpty(pieski)}">
+    <p>Piesek istnieje.</p>
+</div>
+
+
+<div th:if="${error}" th:text="${error}"></div>
 
 </body>
 </html>

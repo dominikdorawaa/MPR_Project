@@ -15,8 +15,10 @@ public class StringUtilsService {
     }
 
     public String upper(String text) {
-
         return text.toUpperCase();
+    }
 
+    public String bigFirstLetter(String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 }

@@ -16,6 +16,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Color</th>
+            <th>Identifier</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -24,6 +25,7 @@
             <td th:text="${piesek.id}"></td>
             <td th:text="${piesek.name}"></td>
             <td th:text="${piesek.color}"></td>
+            <td th:text="${piesek.identyfikator}"></td>
             <td>
                 <a th:href="@{/editForm/{id}(id=${piesek.id})}">Edytuj</a> |
                 <a th:href="@{/deleteForm/{id}(id=${piesek.id})}">Usuń</a>
