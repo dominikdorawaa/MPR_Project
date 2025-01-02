@@ -1,15 +1,15 @@
 package pl.edu.pjatk.MPR_Projekt.selenium;
 
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
-public class AddFormTest {
+public class DeleteFormTest {
 
     WebDriver webDriver;
 
@@ -18,15 +18,13 @@ public class AddFormTest {
         this.webDriver = new ChromeDriver();
     }
 
+
     @Test
-    public void testAddForm() {
-        AddFormPage addFormPage = new AddFormPage(webDriver);
-        addFormPage
-                .open()
-                .fillName("TestPiesek")
-                .fillColor("blue")
+    public void testDeleteForm() {
+        DeleteFormPage deleteFormPage = new DeleteFormPage(webDriver);
+        int idToDelete = 2;
+        deleteFormPage
+                .open(idToDelete)
                 .submitForm();
     }
-
-
 }

@@ -23,7 +23,7 @@ public class ViewAllPage {
     }
 
     public ViewAllPage open() {
-        this.webDriver.get("http://localhost:8080/view/all");
+        this.webDriver.get("http://localhost:8082/view/all");
         return this;
     }
 

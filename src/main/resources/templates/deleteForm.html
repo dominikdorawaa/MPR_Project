@@ -12,7 +12,7 @@
 <form th:action="@{/deleteForm/{id}(id=${piesek.id})}" method="post">
     <p><strong>Imię:</strong> <span th:text="${piesek.name}"></span></p>
     <p><strong>Kolor:</strong> <span th:text="${piesek.color}"></span></p>
-    <button type="submit">Tak, usuń</button>
+    <button type="submit" id="submit">Tak, usuń</button>
     <a th:href="@{/view/all}">Anuluj</a>
 
 </form>
