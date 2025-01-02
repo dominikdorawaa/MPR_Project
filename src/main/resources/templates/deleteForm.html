@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>Delete Piesek</title>
+</head>
+
+<body>
+<div id="delete">
+<h1>Czy na pewno chcesz usunąć tego pieska?</h1>
+<form th:action="@{/deleteForm/{id}(id=${piesek.id})}" method="post">
+    <p><strong>Imię:</strong> <span th:text="${piesek.name}"></span></p>
+    <p><strong>Kolor:</strong> <span th:text="${piesek.color}"></span></p>
+    <button type="submit">Tak, usuń</button>
+    <a th:href="@{/view/all}">Anuluj</a>
+
+</form>
+</div>
+
+
+
+
+</body>
+</html>

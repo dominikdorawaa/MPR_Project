@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>Edit</title>
 </head>
 <body>
 
-<h1>Edycja pieska</h1>
-<form th:action="@{/editForm/{id}(id=${piesek.id})}" th:object="${piesek}" method="post">
+<div id="edit">
+    <h1>Edycja pieska</h1>
+    <form th:action="@{/editForm/{id}(id=${piesek.id})}" th:object="${piesek}" method="post">
     <input type="hidden" name="identyfikator" th:value="*{identyfikator}" />
 
     <label for="name">Imię:</label>
@@ -16,8 +18,8 @@
     <label for="color">Kolor:</label>
     <input type="text" id="color" name="color" th:field="*{color}"/><br/>
 
-    <input type="submit" value="Zapisz zmiany">
-</form>
-
+    <button type="submit"> Zapisz zmiany </button>
+    </form>
+</div>
 </body>
 </html>

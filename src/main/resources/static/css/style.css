@@ -1,33 +1,221 @@
 
 
 body {
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-table {
-    width: 50%;
+
+
+#delete {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 50px auto;
+    border:5px dashed  black;
+    padding: 15px;
+}
+
+#delete form {
+    margin-left: 20px;
+    font-size:25px;
+}
+
+#delete button{
+    font-size: 18px;
+    background-color: cornflowerblue;
+    border: 1px solid deepskyblue;
+    border-radius:10px;
+    padding: 7px;
+    width: 100px;
+    text-align: center;
+    word-break: break-word;
+
+}
+
+#delete a {
+    font-size: 18px;
+    color:white;
+    background-color: red;
+    border-radius: 10px;
+    padding: 7px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#delete h1 {
+    color:red;
+    margin: 10px 0;
+    font-size:35px;
+}
+
+#all .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0 10px;
+}
+
+#all .header h1 {
+    margin-left: 30px;
+    font-size: 35px;
+}
+
+ #addButton {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+     width: 30px;
+     height: 30px;
+}
+
+#addButton:hover {
+    background-color: #218838;
+}
+
+
+
+#all {
+        display: flex;
+        align-content: center;
+        flex-direction: column;
+        justify-content: center;
+        margin: 50px auto;
+}
+
+#all h1 {
+    margin: 20px;
+    font-size:35px;
+    text-align: center;
+}
+#all table {
     border-collapse: collapse;
+    height: 300px;
+    width: 1000px;
 }
 
-th, td {
-    padding: 8px;
+#all th, td {
+    padding: 5px;
     border: 1px solid #ddd;
-    text-align: left;
+    text-align: center;
 }
 
-th {
+#all th {
     background-color: #f2f2f2;
 }
 
-td {
-    width: 30px;
+#all td {
+        width: 30px;
 }
 
-a {
+#all a {
     color: blue;
     text-decoration: none;
 }
 
-a:hover {
+#all a:hover {
     text-decoration: underline;
+}
+
+#all #action {
+    width: 300px;
+}
+
+#edit {
+    margin: 50px auto;
+    border:5px dashed  black;
+    padding: 15px;
+}
+
+#edit h1 {
+    font-size:35px;
+    text-align: center;
+}
+
+
+#edit form {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+#edit input {
+    padding: 6px;
+    font-size: 25px;
+    margin:10px;
+}
+
+#edit label {
+    font-size: 20px;
+}
+
+
+#edit button {
+    font-size: 18px;
+    color: white;
+    border: 1px solid deepskyblue;
+    border-radius: 10px;
+    padding: 7px;
+    width: 120px;
+    text-align: center;
+    word-break: break-word;
+    margin: 15px auto;
+}
+
+
+
+#add {
+    margin: 50px auto;
+    border:5px dashed  black;
+    padding: 15px;
+}
+
+#add h1 {
+    font-size:35px;
+    text-align: center;
+}
+
+
+#add form {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+#add input {
+    padding: 6px;
+    font-size: 25px;
+    margin:10px;
+}
+
+#add label {
+    font-size: 20px;
+}
+
+
+#add button {
+    font-size: 18px;
+    color: white;
+    border: 1px solid deepskyblue;
+    border-radius: 10px;
+    padding: 7px;
+    width: 120px;
+    text-align: center;
+    word-break: break-word;
+    margin: 15px auto;
 }

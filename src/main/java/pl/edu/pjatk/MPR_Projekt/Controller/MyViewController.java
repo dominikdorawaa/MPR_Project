@@ -78,22 +78,24 @@ public class MyViewController {
 
 
     @PostMapping("/editForm/{id}")
-    public String updateForm(@PathVariable int id, @ModelAttribute Piesek piesek) {
+    public String confirmEdit(@PathVariable int id, @ModelAttribute Piesek piesek) {
         this.piesekService.updatePiesek(piesek,id);
         return "redirect:/view/all";
     }
 
 
-
-
-
-
-
     @GetMapping("/deleteForm/{id}")
-    public String deleteForm(@PathVariable int id) {
-        this.piesekService.deletePiesekById(id);
-      return "redirect:/view/all";
-
-
+    public String displayDeleteForm(@PathVariable int id, Model model) {
+        Piesek piesek = (Piesek) this.piesekService.getPiesekById(id);
+        model.addAttribute("piesek", piesek);
+        return "deleteForm";
     }
+
+    @PostMapping("/deleteForm/{id}")
+    public String confirmDelete(@PathVariable int id) {
+        this.piesekService.deletePiesekById(id);
+        return "redirect:/view/all";
+    }
+
+
 }

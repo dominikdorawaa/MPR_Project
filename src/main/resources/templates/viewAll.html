@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>Moje pieski!</title>
+    <script src="https://kit.fontawesome.com/841f4f2efe.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>Wszystkie pieski</h1>
 
 
-<div th:if="${pieski}">
+
+<div id="all" th:if="${pieski}">
+
+    <div class="header">
+        <h1>Wszystkie pieski</h1>
+        <button id="addButton"><i class="fa-solid fa-plus"></i></button>
+    </div>
+
     <table>
         <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
-            <th>Color</th>
-            <th>Identifier</th>
-            <th>Actions</th>
+            <th>Imię</th>
+            <th>Kolor</th>
+            <th>Identyfikator</th>
+            <th>Edytuj</th>
+            <th>Usuń</th>
         </tr>
         </thead>
         <tbody>
@@ -25,9 +33,10 @@
             <td th:text="${piesek.id}"></td>
             <td th:text="${piesek.name}"></td>
             <td th:text="${piesek.color}"></td>
-            <td th:text="${piesek.identyfikator}"></td>
+            <td  th:text="${piesek.identyfikator}"></td>
             <td>
-                <a th:href="@{/editForm/{id}(id=${piesek.id})}">Edytuj</a> |
+                <a th:href="@{/editForm/{id}(id=${piesek.id})}">Edytuj</a>
+            <td>
                 <a th:href="@{/deleteForm/{id}(id=${piesek.id})}">Usuń</a>
             </td>
         </tr>
@@ -43,5 +52,12 @@
 
 <div th:if="${error}" th:text="${error}"></div>
 
+
+
+<script>
+    document.getElementById("addButton").addEventListener("click", function() {
+        window.location.href = "/addForm";
+    });
+</script>
 </body>
 </html>

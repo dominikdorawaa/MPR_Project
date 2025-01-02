@@ -2,27 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pieski form!</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>Dodaj</title>
 </head>
+
 <body>
-<p>Dodaj pieska</p>
+<div id="add">
+<h1>Dodaj pieska</h1>
 
 <form th:action="@{/addForm}" th:object="${piesek}" method="post">
 
     <label for="name">Imię:</label>
     <input id="name" type="text" placeholder="Wpisz imię" th:field="*{name}" required>
     <br/>
-
-
     <label for="color">Kolor:</label>
     <input id="color" type="text" placeholder="Wpisz kolor" th:field="*{color}" required>
     <br/>
 
-
-
-    <input id="submit" type="submit" value="Dodaj">
+    <button type="submit">Dodaj</button>
 </form>
-
+</div>
 
 <div th:if="${pieski != null and !#lists.isEmpty(pieski)}">
     <p>Piesek istnieje.</p>
