@@ -173,7 +173,17 @@ body {
     margin: 15px auto;
 }
 
-
+#edit a {
+    font-size: 18px;
+    color:white;
+    background-color: red;
+    border-radius: 10px;
+    padding: 7px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    margin:10px auto;
+}
 
 #add {
     margin: 50px auto;
@@ -214,5 +224,17 @@ body {
     width: 120px;
     text-align: center;
     word-break: break-word;
-    margin: 15px auto;
+    margin:10px auto;
+}
+
+#add a {
+    font-size: 18px;
+    color:white;
+    background-color: red;
+    border-radius: 10px;
+    padding: 7px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    margin:10px auto;
 }
