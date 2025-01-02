@@ -38,8 +38,11 @@ public class MyViewController {
     }
 
     @PostMapping("/addForm")
-    public String submitForm(@ModelAttribute Piesek piesek) {
-        this.piesekService.createPiesek(piesek);
+    public String submitForm(@ModelAttribute("piesek") Piesek piesek, Model model) {
+        this.piesekService.createPiesek(piesek,model);
+        if (model.containsAttribute("error")) {
+            return "addForm";
+        }
         return "redirect:/view/all";
     }
 

@@ -1,5 +1,6 @@
 package pl.edu.pjatk.MPR_Projekt.Service;
 
+import org.springframework.ui.Model;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -7,6 +8,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.client.RestClient;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 import pl.edu.pjatk.MPR_Projekt.exception.PiesekAlreadyExistException;
@@ -43,7 +45,13 @@ public class PiesekService {
         }
     }
 
-    public void createPiesek(Piesek piesek) {
+    public void createPiesek(@ModelAttribute("piesek") Piesek piesek, Model model) {
+
+            if (piesek.getName() == null || piesek.getName().isEmpty() ||
+                    piesek.getColor() == null || piesek.getColor().isEmpty()) {
+                model.addAttribute("error","Nazwa lub kolor nie mogą być puste");
+                return;
+            }
         try {
             restClient.post()
                     .uri("/piesek/add")
@@ -51,6 +59,9 @@ public class PiesekService {
                     .body(piesek)
                     .retrieve()
                     .toBodilessEntity();
+
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error","Nie udało się dodać pieska. Spróbuj ponownie.");
         } catch (Exception e) {
             throw new PiesekAlreadyExistException();
         }

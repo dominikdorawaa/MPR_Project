@@ -9,7 +9,11 @@ body {
     justify-content: center;
 }
 
-
+#add #error {
+    color:red;
+    text-align: center;
+   background: none;
+}
 
 #delete {
     display: flex;
@@ -238,3 +242,4 @@ body {
     text-decoration: none;
     margin:10px auto;
 }
+

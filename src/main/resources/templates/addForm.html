@@ -22,6 +22,7 @@
     <button type="submit" id="submit">Dodaj</button>
     <a th:href="@{/view/all}">Cofnij</a>
 </form>
+    <a id="error" th:if="${error}" th:text="${error}"></a>
 </div>
 
 <div th:if="${pieski != null and !#lists.isEmpty(pieski)}">
@@ -29,7 +30,7 @@
 </div>
 
 
-<div th:if="${error}" th:text="${error}"></div>
+
 
 </body>
 </html>
