@@ -20,6 +20,7 @@
 
     <button type="submit" id="submit"> Zapisz zmiany </button>
      <a th:href="@{/view/all}">Cofnij</a>
+        <div th:if="${error}" th:text="${error}"></div>
     </form>
 </div>
 </body>

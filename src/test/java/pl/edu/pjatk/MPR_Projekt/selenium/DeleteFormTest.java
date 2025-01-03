@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pl.edu.pjatk.MPR_Projekt.Model.Piesek;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 public class DeleteFormTest {
@@ -22,9 +23,13 @@ public class DeleteFormTest {
     @Test
     public void testDeleteForm() {
         DeleteFormPage deleteFormPage = new DeleteFormPage(webDriver);
-        int idToDelete = 2;
+        int idToDelete = 1;
         deleteFormPage
                 .open(idToDelete)
                 .submitForm();
+
+
+        String pageSource = webDriver.getPageSource();
+        assertFalse(pageSource.contains("ID: " + idToDelete), "Usunięty piesek nadal istnieje na stronie.");
     }
 }
